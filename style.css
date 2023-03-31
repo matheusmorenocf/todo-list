@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  padding: 10px;
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  margin: 50px auto;
+  background-color: goldenrod;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.row i {
+  color:  #454545;
+  cursor: pointer;
+}
+
+.row label {
+  text-transform: uppercase;
+  font-weight: bold;
+  width: 80px;
+}
+
+.row input {
+  flex-grow: 1;
+  height: 25px;
+  font-weight: bold;
+}
+
+input:disabled {
+  background-color: #fff;
+}
+
+.checked {
+  text-decoration: line-through;
+  font-style: italic;
+  color: green;
+}
