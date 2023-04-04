@@ -88,7 +88,7 @@ function criarBotoes(type, inputTask) {
 function checkTask(inputTask) {
   inputTask.classList.toggle('checked');
   const index = Array.from(document.querySelectorAll('.row')).indexOf(inputTask.parentElement)
-  if (data[index].status === 'checked') data[index].status = ''
+  if (data[index].status === 'checked') data[index].status = 'to-do'
   else data[index].status = 'checked'
 }
 
