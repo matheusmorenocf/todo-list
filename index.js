@@ -1,6 +1,5 @@
 let data = [
-  {'task':'Estudar', 'status':'checked'},
-  {'task':'Trabalhar', 'status':'checked'}
+
 ]
 
 const clearTasks = () => {
@@ -11,7 +10,8 @@ const clearTasks = () => {
 }
 
 const render = () => {
-  clearTasks()
+  getTasks(data);
+  clearTasks();
   data.forEach(dt => {createTask(dt.task, dt.status)})
 }
 
@@ -19,14 +19,36 @@ render()
 
 
 document.querySelector('.input-task i').addEventListener('click', (ev) => {
-  data.push({tarefa: ev.target.previousElementSibling.value, status: ''})
-  render()
+  saveTasks(data, ev.target.previousElementSibling.value, 'to-do');
+  render();
+  ev.target.previousElementSibling.value = '';
 })
+
+document.querySelector('.input-task input').addEventListener('keypress', (ev) => {
+  if (ev.key == 'Enter') {
+    saveTasks(data, ev.target.value, 'to-do');
+    render();
+    ev.target.value = '';
+  }
+})
+
+function getTasks (data) {
+  const dataLocal = JSON.parse(localStorage.getItem('data-task')) ?? [];
+  dataLocal.forEach(item => {
+    if(!data.some(dt => dt.task === item.task)) data.push(item)
+  });
+}
+
+function saveTasks (data, value, currentStatus) {
+  if(value && currentStatus) data.push({task: value, status: currentStatus})
+  localStorage.setItem('data-task', JSON.stringify(data))
+}
 
 function createTask(value, status) {
   const taskContainer = document.createElement('div');
   taskContainer.classList.add('row');
   const task = document.createElement('input');
+  task.classList.add('inputStyle')
   task.disabled = 'true'
   task.value = value
   status === 'checked' ? task.classList.add('checked') : void(0);
@@ -54,9 +76,9 @@ function criarBotoes(type, inputTask) {
   } else {
     button.classList.add('fa-delete-left')
     button.addEventListener('click', () => {
-      button.classList.add('fa-pen-to-square')
-      const index = Array.from(document.querySelectorAll('.row')).indexOf(inputTask.parentElement);
+      const index = Array.from(document.querySelectorAll('.row')).indexOf(inputTask);
       data.splice(index, 1);
+      saveTasks(data)
       render();
     })
   }
