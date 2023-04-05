@@ -54,16 +54,17 @@ body {
   align-items: center;
 }
 
-input {
+input, textarea {
   background-color: transparent;
   border-radius: 5px;
   color: white;
   outline: none;
+  resize: none;
+  
 }
 
 .inputStyle {
   flex-grow: 1;
-  height: 30px;
   padding: .2rem .5rem;
   border: none;
 }

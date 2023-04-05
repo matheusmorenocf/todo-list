@@ -1,5 +1,6 @@
 let data = [
-
+  {"task": "Tarefa para teste", "status": "checked"},
+  {"task": "As tarefas que você salva estão sendo armazenadas no local storage, então você nao as perde =)", "status": "to-do"}
 ]
 
 const clearTasks = () => {
@@ -47,10 +48,10 @@ function saveTasks (data, value, currentStatus) {
 function createTask(value, status) {
   const taskContainer = document.createElement('div');
   taskContainer.classList.add('row');
-  const task = document.createElement('input');
+  const task = document.createElement('span');
   task.classList.add('inputStyle')
   task.disabled = 'true'
-  task.value = value
+  task.innerText = value
   status === 'checked' ? task.classList.add('checked') : void(0);
   const botaoConcluir = criarBotoes('check', task);
   const botaoEditar = criarBotoes('edit', task);
@@ -67,11 +68,13 @@ function criarBotoes(type, inputTask) {
     button.classList.add('fa-pen-to-square')
     button.addEventListener('click', () => {
       editTask(button, inputTask)
+      
     })
   } else if (type === 'check') {
     button.classList.add('fa-check')
     button.addEventListener('click', () => {
       checkTask(inputTask)
+      
     })
   } else {
     button.classList.add('fa-delete-left')
@@ -94,7 +97,9 @@ function checkTask(inputTask) {
 
 function editTask(button, inputTask) {
   const index = Array.from(document.querySelectorAll('.row')).indexOf(inputTask.parentElement)
-  data[index].task = inputTask.value
+  data[index].task = prompt('O que deseja editar ?') ?? data[index].task;
+  saveTasks(data);
+  render();
   if (button.classList.contains('fa-pen-to-square')) {
     inputTask.disabled = '';
     button.classList.remove('fa-pen-to-square');
