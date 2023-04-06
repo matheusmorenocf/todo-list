@@ -4,10 +4,16 @@
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
   background-color: #212121;
 }
+
+input {
+  background-color: transparent;
+  border-radius: 5px;
+  color: white;
+  outline: none;
+}
+
 
 .container {
   background-color: #444444;
@@ -43,24 +49,9 @@ body {
   cursor: pointer;
 }
 
-.row label {
-  text-transform: uppercase;
-  font-weight: bold;
-  width: 80px;
-}
-
 .input-task {
   display: flex;
   align-items: center;
-}
-
-input, textarea {
-  background-color: transparent;
-  border-radius: 5px;
-  color: white;
-  outline: none;
-  resize: none;
-  
 }
 
 .inputStyle {
@@ -69,12 +60,73 @@ input, textarea {
   border: none;
 }
 
-input:disabled {
+
+.editForm {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translateX(-50%);
+  max-width: 400px;
+  width: 100%;
+  background-color: #444444;
+  padding: .5em;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  
+}
+
+.editForm input{
+  width: 100%;
+  background-color:  #333333;
+  font-size: 14px;
+  padding: .5rem 1rem;
+  
+}
+
+.editForm button {
+  display: inline-block;
+  padding: 0.5rem 1.8rem;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  border: 3px solid rgb(252, 70, 100);
+  cursor: pointer;
+  position: relative;
   background-color: transparent;
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 1;
+  font-family: inherit;
+
+}
+
+.editForm button::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(252, 70, 100);
+  transform: translateX(-100%);
+  transition: all .3s;
+  z-index: -1;
+}
+
+.editForm button:hover::before {
+  transform: translateX(0);
 }
 
 .checked {
   text-decoration: line-through;
   font-style: italic;
   
+}
+
+.hidden {
+  display: none;
 }

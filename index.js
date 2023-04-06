@@ -50,7 +50,6 @@ function createTask(value, status) {
   taskContainer.classList.add('row');
   const task = document.createElement('span');
   task.classList.add('inputStyle')
-  task.disabled = 'true'
   task.innerText = value
   status === 'checked' ? task.classList.add('checked') : void(0);
   const botaoConcluir = criarBotoes('check', task);
@@ -97,18 +96,30 @@ function checkTask(inputTask) {
 
 function editTask(button, inputTask) {
   const index = Array.from(document.querySelectorAll('.row')).indexOf(inputTask.parentElement)
-  data[index].task = prompt('O que deseja editar ?') ?? data[index].task;
-  saveTasks(data);
-  render();
-  if (button.classList.contains('fa-pen-to-square')) {
-    inputTask.disabled = '';
-    button.classList.remove('fa-pen-to-square');
-    button.classList.add('fa-check-double') 
-  }
-  else {
-    inputTask.disabled = 'true';
-    button.classList.add('fa-pen-to-square');
-    button.classList.remove('fa-check-double');
-  }
+  const editForm = document.createElement('div');
+  const editInput = document.createElement('input');
+  const confirmButton = document.createElement('button');
+  editForm.classList.add('editForm');
+  editInput.classList.add('inputStyle');
+  confirmButton.innerText = 'Confirmar'
+  editForm.append(editInput,confirmButton);
+  document.body.appendChild(editForm);
+  editInput.value = data[index].task
+  document.querySelector('.container').classList.add('hidden');
+
+  confirmButton.addEventListener('click', () => editData(data, index, editForm));
+  editInput.addEventListener('keypress', (ev) => {if(ev.key == 'Enter') {editData(data, index, editForm)}})
+  
+  
+
+
+}
+
+function editData (data, index, editForm) {
+  data[index].task = document.querySelector('.editForm .inputStyle').value;
+  document.querySelector('.container').classList.remove('hidden');
+    document.body.removeChild(editForm);
+    saveTasks(data);
+    render();
 
 }
