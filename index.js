@@ -47,7 +47,10 @@ function saveTasks (data, value, currentStatus) {
 
 function createTask(value, status) {
   const taskContainer = document.createElement('div');
+  const taskId = Math.floor(Math.random() * 100000);
   taskContainer.classList.add('row');
+  taskContainer.id = `task-${taskId}`;
+  taskContainer.draggable = 'true'
   const task = document.createElement('span');
   task.classList.add('inputStyle')
   task.innerText = value
@@ -56,7 +59,8 @@ function createTask(value, status) {
   const botaoEditar = criarBotoes('edit', task);
   const botaoApagar = criarBotoes('delete', taskContainer);
   taskContainer.append(task, botaoConcluir, botaoEditar, botaoApagar);
-  document.querySelector('.container-tasks').append(taskContainer)
+  document.querySelector('.container-tasks').append(taskContainer);
+
 }
 
 function criarBotoes(type, inputTask) {
