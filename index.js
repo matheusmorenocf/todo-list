@@ -1,6 +1,6 @@
 let data = [
-  {"task": "Tarefa para teste", "status": "checked"},
-  {"task": "As tarefas que você salva estão sendo armazenadas no local storage, então você nao as perde =)", "status": "to-do"}
+  {"task": "Tarefa para teste", "status": "checked", "index": "1"},
+  {"task": "As tarefas que você salva estão sendo armazenadas no local storage, então você nao as perde =)", "status": "to-do", "index": "2"}
 ]
 
 const clearTasks = () => {
@@ -36,12 +36,12 @@ document.querySelector('.input-task input').addEventListener('keypress', (ev) =>
 function getTasks (data) {
   const dataLocal = JSON.parse(localStorage.getItem('data-task')) ?? [];
   dataLocal.forEach(item => {
-    if(!data.some(dt => dt.task === item.task)) data.push(item)
+    if(!data.some(dt => dt.index === item.index)) data.push(item)
   });
 }
 
 function saveTasks (data, value, currentStatus) {
-  if(value && currentStatus) data.push({task: value, status: currentStatus})
+  if(value && currentStatus) data.push({task: value, status: currentStatus, index: data.length + 1})
   localStorage.setItem('data-task', JSON.stringify(data))
 }
 
@@ -66,7 +66,7 @@ function criarBotoes(type, inputTask) {
   if (type === 'edit') {
     button.classList.add('fa-pen-to-square')
     button.addEventListener('click', () => {
-      editTask(button, inputTask)
+      editTask(inputTask)
       
     })
   } else if (type === 'check') {
@@ -94,7 +94,7 @@ function checkTask(inputTask) {
   else data[index].status = 'checked'
 }
 
-function editTask(button, inputTask) {
+function editTask(inputTask) {
   const index = Array.from(document.querySelectorAll('.row')).indexOf(inputTask.parentElement)
   const editForm = document.createElement('div');
   const editInput = document.createElement('input');
